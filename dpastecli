@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+# A little bash script which transfers content from stdin directy to
+# http://dpate.com.
+# 
+# Furthermore the script saves the cookie of the transfer in a file to
+# make the deletion of the pasted content possbile.
+#
+# http://dpaste.com/ provides a few syntax templates which you can
+# used.
+#
+# cgb
+
+# will be set to '0' if -o is specified
+OPT_TRANSFER_COOKIE=1
+
+# the file where we store the header (and cookie) of http://dpaste.com
+OPT_DPASTE_COOKIE=/tmp/dpaste_cookie
+ 
+# the syntax which may be specified by -s
+OPT_SYNTAX=
+
+# the link of the content to be deleted. May be specified by -d
+OPT_DELETE=
+
+usage()
+{
+  echo "Usage: ${0##*/} [OPTIONS]
+  -s <syntax>     paste content with specified syntax (default: plain)
+                  The following values are allowed: Python,
+                  PythonConsole, Sql, DjangoTemplate, JScript, Css,
+                  Xml, Diff, Ruby, Rhtml, Haskell, Apache, Bash
+  
+  -d <link>       delete recently pasted content. Therefore -o
+                  must not be set at the time the content was pasted.
+				  
+  -o              omit transffering and saving the cookie"
+}
+
+# prepares a few curl opts to transfer cookies
+header_cookie()
+{
+OPT_HEADER_COOKIE="--dump-header $OPT_DPASTE_COOKIE --cookie
+	$OPT_DPASTE_COOKIE"
+}
+
+# curl invokation
+# delete the recently added content
+dpaste_delete()
+{
+  curl --cookie $OPT_DPASTE_COOKIE -F "submit=Really delete it" \
+    "$OPT_DELETE/delete/"
+}
+
+# curl
+# paste new content from stdin
+dpaste_commit()
+{ 
+  curl $OPT_HEADER_COOKIE -F "language=$OPT_SYNTAX" -F "content=`cat`" \
+    -F "submit=Paste it" -w "%{redirect_url}\n" http://dpaste.com
+}
+
+# parse the command line options
+#
+# h  | help
+# o  | omit
+# d: | delete
+# s: | syntax
+while getopts "hod:s:" opt; do
+  case $opt in
+    h)
+      usage
+      exit 0
+      ;;
+    o)
+      OPT_TRANSFER_COOKIE=0
+      ;;
+    d)
+      OPT_DELETE=$OPTARG
+      ;;
+    s)
+      OPT_SYNTAX=$OPTARG
+      ;;
+    *)
+      exit 1
+  esac
+done
+
+# check a few things which would not make sense
+if [ ! -z $OPT_DELETE ] && [ $OPT_TRANSFER_COOKIE -eq 0 ]; then
+  echo -n "The deletion of a paste without the transfer of the "
+  echo "cookie will not be successful."
+  exit 1
+fi
+
+if [ ! -z $OPT_DELETE ] && [ ! -z $OPT_SYNTAX ]; then
+  echo "Combination of options makes no sense"
+  exit 1
+fi
+ 
+# check for cookie support
+if [ $OPT_TRANSFER_COOKIE -eq 1 ]; then
+   header_cookie
+fi
+
+# actions
+if [ ! -z $OPT_DELETE ]; then
+  dpaste_delete
+else
+  dpaste_commit
+fi

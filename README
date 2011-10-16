@@ -1,0 +1,10 @@
+dpastecli is a small shell script to paste content from stdin to http://dpaste.com
+
+key feautures:
+  - small
+  - reads from stdin
+  - dpaste syntax supported
+  - deletion of content possible
+
+dependencies:
+  - curl (http://curl.haxx.se/)
