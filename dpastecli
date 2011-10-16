@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# A little bash script which transfers content from stdin directy to
-# http://dpate.com.
+# A small bash script which transfers content from stdin directy to
+# http://dpaste.com.
 # 
 # Furthermore the script saves the cookie of the transfer in a file to
 # make the deletion of the pasted content possbile.
