@@ -8,3 +8,17 @@ key feautures:
 
 dependencies:
   - curl (http://curl.haxx.se/)
+
+install:
+  - put dpaste to /usr/local/bin
+  - chmod +x /usr/local/bin/dpastecli
+
+examples:
+  - cat shellscript.sh | dpaste -s Bash
+    (Syntax template for Bash)
+
+  - echo "Hello World" | dpaste -o
+    (Omit saving the cookie)
+
+  - dpaste -d http://dpaste.com/<id>
+    (Delete pasted content)
