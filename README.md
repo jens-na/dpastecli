@@ -21,12 +21,12 @@ Installation
 How to use it
 --------------
 
-(Syntax template for Bash)
-<tt>cat shellscript.sh | dpastecli -s Bash</tt>
+Syntax template for Bash <br/>
+<tt>$ cat shellscript.sh | dpastecli -s Bash</tt>
 
-(Omit saving the cookie)
-<tt>echo "Hello World" | dpastecli -o</tt>
+Omit saving the cookie <br/>
+<tt>$ echo "Hello World" | dpastecli -o</tt>
     
-(Delete pasted content)
-<tt>dpastecli -d http://dpaste.com/<id>/</tt>
+Delete pasted content <br/>
+<tt>$ dpastecli -d http://dpaste.com/id</tt>
     
