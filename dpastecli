@@ -55,7 +55,7 @@ dpaste_delete()
 # curl
 # paste new content from stdin
 dpaste_commit()
-{ 
+{
   curl $OPT_HEADER_COOKIE -F "language=$OPT_SYNTAX" -F "content=<-" \
     -F "submit=Paste it" -w "%{redirect_url}\n" http://dpaste.com
 }
@@ -109,3 +109,4 @@ if [ ! -z $OPT_DELETE ]; then
 else
   dpaste_commit
 fi
+
