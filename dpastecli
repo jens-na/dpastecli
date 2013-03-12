@@ -9,7 +9,7 @@
 # http://dpaste.com/ provides a few syntax templates which you can
 # used.
 #
-# cgb
+# jens-na
 
 # will be set to '0' if -o is specified
 OPT_TRANSFER_COOKIE=1
