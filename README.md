@@ -1,13 +1,27 @@
 dpastecli 
 ==========
-<tt>dpastecli</tt> is a shell script to paste content from stdin to http://dpaste.com
+<tt>dpastecli</tt> is a shell script to paste content from <tt>stdin</tt> to http://dpaste.com
 
 Features
 --------
   - small
-  - reads from stdin
-  - dpaste syntax supported
+  - reads from standard input
   - deletion of content possible
+  - dpaste syntax supported (case sensitive!)
+    - Python
+    - PythonConsole
+    - Sql
+    - DjangoTemplate
+    - JScript
+    - Css
+    - Xml
+    - Diff
+    - Ruby
+    - Rhtml
+    - Haskell
+    - Apache
+    - Bash
+
 
 Prerequisites
 -------------
@@ -29,4 +43,3 @@ Omit saving the cookie <br/>
     
 Delete pasted content <br/>
 <tt>$ dpastecli -d http://dpaste.com/id</tt>
-    
