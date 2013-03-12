@@ -40,8 +40,7 @@ usage()
 # prepares a few curl opts to transfer cookies
 header_cookie()
 {
-OPT_HEADER_COOKIE="--dump-header $OPT_DPASTE_COOKIE --cookie
-	$OPT_DPASTE_COOKIE"
+  OPT_HEADER_COOKIE="--dump-header $OPT_DPASTE_COOKIE --cookie $OPT_DPASTE_COOKIE"
 }
 
 # curl invokation
@@ -56,8 +55,8 @@ dpaste_delete()
 # paste new content from stdin
 dpaste_commit()
 {
-  curl $OPT_HEADER_COOKIE -F "language=$OPT_SYNTAX" -F "content=<-" \
-    -F "submit=Paste it" -w "%{redirect_url}\n" http://dpaste.com
+  curl $OPT_HEADER_COOKIE -si -F 'content=<-' -F language="$OPT_SYNTAX" \
+    http://dpaste.com/api/v1/ | grep "Location:" | sed 's/.*: //g' 
 }
 
 # parse the command line options
@@ -109,4 +108,3 @@ if [ ! -z $OPT_DELETE ]; then
 else
   dpaste_commit
 fi
-
