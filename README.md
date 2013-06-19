@@ -32,6 +32,8 @@ Installation
   - put dpastecli to <tt>/usr/local/bin</tt>
   - <tt>chmod +x /usr/local/bin/dpastecli</tt>
 
+AUR Package: https://aur.archlinux.org/packages/dpastecli-git/
+
 How to use it
 --------------
 
