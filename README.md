@@ -45,3 +45,9 @@ Omit saving the cookie <br/>
     
 Delete pasted content <br/>
 <tt>$ dpastecli -d http://dpaste.com/id</tt>
+
+License and Copyright
+=======
+Licensed under the GNU General Public License 3.
+
+(C) Jens Nazarenus, 2012-2013
