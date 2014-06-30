@@ -56,7 +56,7 @@ dpaste_delete()
 dpaste_commit()
 {
   curl $OPT_HEADER_COOKIE -si -F 'content=<-' -F language="$OPT_SYNTAX" \
-    http://dpaste.com/api/v1/ | grep "Location:" | sed 's/.*: //g'
+    http://dpaste.com/api/v2/ | grep "Location:" | sed 's/.*: //g'
 }
 
 # parse the command line options
