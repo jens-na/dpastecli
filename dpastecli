@@ -2,7 +2,7 @@
 #
 # A small bash script which transfers content from stdin directy to
 # http://dpaste.com.
-# 
+#
 # Furthermore the script saves the cookie of the transfer in a file to
 # make the deletion of the pasted content possbile.
 #
@@ -16,7 +16,7 @@ OPT_TRANSFER_COOKIE=1
 
 # the file where we store the header (and cookie) of http://dpaste.com
 OPT_DPASTE_COOKIE=/tmp/dpaste_cookie
- 
+
 # the syntax which may be specified by -s
 OPT_SYNTAX=
 
@@ -30,10 +30,10 @@ usage()
                   The following values are allowed: Python,
                   PythonConsole, Sql, DjangoTemplate, JScript, Css,
                   Xml, Diff, Ruby, Rhtml, Haskell, Apache, Bash
-  
+
   -d <link>       delete recently pasted content. Therefore -o
                   must not be set at the time the content was pasted.
-				  
+
   -o              omit transffering and saving the cookie"
 }
 
@@ -56,7 +56,7 @@ dpaste_delete()
 dpaste_commit()
 {
   curl $OPT_HEADER_COOKIE -si -F 'content=<-' -F language="$OPT_SYNTAX" \
-    http://dpaste.com/api/v1/ | grep "Location:" | sed 's/.*: //g' 
+    http://dpaste.com/api/v1/ | grep "Location:" | sed 's/.*: //g'
 }
 
 # parse the command line options
@@ -96,10 +96,10 @@ if [ ! -z $OPT_DELETE ] && [ ! -z $OPT_SYNTAX ]; then
   echo "Combination of options makes no sense"
   exit 1
 fi
- 
+
 # check for cookie support
 if [ $OPT_TRANSFER_COOKIE -eq 1 ]; then
-   header_cookie
+  header_cookie
 fi
 
 # actions
