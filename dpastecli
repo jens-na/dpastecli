@@ -11,11 +11,17 @@
 #
 # jens-na
 
+# The url to the server's api root
+API_URL="http://dpaste.com/api/v2/"
+
 # will be set to '0' if -o is specified
 OPT_TRANSFER_COOKIE=1
 
 # the file where we store the header (and cookie) of http://dpaste.com
 OPT_DPASTE_COOKIE=/tmp/dpaste_cookie
+
+# the days after which the paste expires. May be specified by -e
+OPT_EXPIRY=7
 
 # the syntax which may be specified by -s
 OPT_SYNTAX=
@@ -30,6 +36,8 @@ usage()
                   The following values are allowed: Python,
                   PythonConsole, Sql, DjangoTemplate, JScript, Css,
                   Xml, Diff, Ruby, Rhtml, Haskell, Apache, Bash
+
+  -e <days>       Days after which the paste expires (default 7)
 
   -d <link>       delete recently pasted content. Therefore -o
                   must not be set at the time the content was pasted.
@@ -55,21 +63,28 @@ dpaste_delete()
 # paste new content from stdin
 dpaste_commit()
 {
-  curl $OPT_HEADER_COOKIE -si -F 'content=<-' -F language="$OPT_SYNTAX" \
-    http://dpaste.com/api/v2/ | grep "Location:" | sed 's/.*: //g'
+  curl $OPT_HEADER_COOKIE -si \
+    -F 'content=<-' \
+    -F language="$OPT_SYNTAX" \
+    -F expiry_days="$OPT_EXPIRY" \
+    "$API_URL" | grep "Location:" | sed 's/.*: //g'
 }
 
 # parse the command line options
 #
 # h  | help
 # o  | omit
+# e: | expiry_days
 # d: | delete
 # s: | syntax
-while getopts "hod:s:" opt; do
+while getopts "hoe:d:s:" opt; do
   case $opt in
     h)
       usage
       exit 0
+      ;;
+    e)
+      OPT_EXPIRY=$OPTARG
       ;;
     o)
       OPT_TRANSFER_COOKIE=0
